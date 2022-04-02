@@ -1,0 +1,544 @@
+# -TTSBS
+打印沙漏
+
+#include<stdio.h>              
+int main()
+{
+	int a,o,w,i,n=1,x,z,b,c,y;
+	while( scanf("%d",&a)!=EOF)
+	{
+        int q=a,p=a-1,m=a;
+        for(i=1;i<=q;i++)
+        {
+            for(w=1;w<n;w++)
+            {
+                printf(" ");
+            }
+            n=n+1;
+            w=1;
+            for(o=1;o<=2*m-1;o++)
+            {
+                printf("*");
+            }
+            m=m-1;
+            printf("\n");
+            o=1;
+        }
+        n=1;
+        c=a-1;
+        z=2;
+        for(y=1;y<=p;y++) 
+        {
+            for(b=1;b<=c-1;b++)
+            {
+                printf(" ");
+            }
+            for(x=1;x<=2*z-1;x++)
+            {
+                printf("*");
+            }
+            z=z+1;
+            c=c-1;
+            printf("\n");
+            b=1;
+        }
+    }
+}//打印沙漏 
+
+
+//正整数A+B
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int stringToNum(string &str) {
+    int ans = 0;
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] >= '0' && str[i] <= '9') {
+            ans = ans * 10 + (str[i] - '0');
+        } else {
+            return -1;
+        }
+    }
+    return (ans > 0 && ans <= 1000) ? ans : -1;
+}
+
+int main()
+{
+    string aStr, bStr;
+    // 由于输入可能有多个空格，需要注意输入
+    cin >> aStr;
+    getchar();
+    getline(cin, bStr);
+    int a = stringToNum(aStr);
+    int b = stringToNum(bStr);
+    if (a == -1) {
+        cout << "?";
+    } else {
+        cout << a;
+    }
+    cout << " + ";
+    if (b == -1) {
+        cout << "?";
+    } else {
+        cout << b;
+    }
+    cout << " = ";
+    if (a == -1 || b == -1) {
+        cout << "?";
+    } else {
+        cout << a + b;
+    }
+    return 0;
+}
+
+
+
+//帅到没朋友
+
+
+#include <bits/stdc++.h>
+#include <unordered_set>
+using namespace std;
+const int maxn = 105;
+// 需要用 unordered_set，否则有个点会超时
+unordered_set<int> pyq[maxn], vis;
+vector<int> ans;
+
+int main()
+{
+    int n, k, t, m;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> k;
+        for (int j = 0; j < k; j++) {
+            cin >> t;
+            pyq[i].insert(t);
+        }
+    }
+
+    cin >> m;
+    for (int i = 0; i < m; i++) {
+        cin >> t;
+        if (!vis.count(t)) {
+            vis.insert(t);
+            int isHeadsome = 1;
+            for (int j = 0; j < n; j++) {
+            	// 如果他某个朋友圈，且该朋友圈人数大于 1
+                if (pyq[j].count(t) && pyq[j].size() > 1) {
+                    isHeadsome = 0;
+                    break;
+                }
+            }
+            if (isHeadsome) {
+                ans.push_back(t); // 为了格式化输出
+            }
+        }
+    }
+    if (!ans.size()) {
+        printf("No one is handsome\n");
+    } else {
+        for (int i = 0; i < ans.size(); i++) {
+            if (i != 0) {
+                putchar(' ');
+            }
+            printf("%05d", ans[i]);
+        }
+    }
+    return 0;
+}
+
+
+
+
+//判断素数
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isPrime(int n) {
+    if (n < 2) return false;
+    if (n == 2) return true;
+    for (int i = 2; i <= sqrt(n); i++) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    while (n--) {
+        int t;
+        cin >> t;
+        if (isPrime(t)) {
+            cout << "Yes" << endl;
+        } else {
+            cout << "No" << endl;
+        }
+    }
+    return 0;
+}
+
+
+
+//按错键
+
+
+#include <stdio.h>
+#include <math.h>
+char s[] = "`1234567890-=QWERTYUIOP[]\\ASDFGHJKL;'ZXCVBNM,./";//设置常量
+int main()
+{
+    int i,c;
+    while ( (c = getchar()) != EOF) { // 按下ENTER键之后，程序会逐个字符进行处理。比如输入abc,然后ENTER之后，下面的for循环会执行3次。
+        i = 0;
+        while(s[i] && s[i] != c) { // 找到c所在位置
+            i++;
+        }
+ 
+        if (s[i]) {
+            printf("%c",s[i-1]);
+        } else {
+            printf("%c",c); // 其他字符 比如空格之类的直接输出
+        }
+    }
+ 
+    return 0;
+}
+
+
+
+//求最小码距
+
+
+#include<bits/stdc++.h>
+#include<string>
+#include<vector>
+#include<stack>
+#include<set>
+#include<queue>
+#include<map>
+#define ll long long
+#define QAQ 10000
+using namespace std;
+map<char,int>mp;
+string change(string s) {
+	s = s.substr(2,s.length()-2);
+//  cout << s <<endl;
+	reverse(s.begin(),s.end());
+	int b = 0;
+	string str = "";
+	// 把十六进制转为十进制
+	for(int i = 0; i < s.length(); i++) {
+		b += (mp[s[i]]*pow(16,i));
+	}
+	// 把十进制转为二进制
+	do{
+		str += b%2+'0';
+		b /= 2;
+	}while(b);
+//	cout << str << endl;
+	return str;
+}
+int main() {
+	for(int i = 0; i < 10; i++) {
+		mp[i+'0'] = i;
+	}
+	for(int i = 0; i < 6; i++) {
+		mp['a'+ i ] = i+10;
+	}
+	int n,cnt = 0,a[QAQ], minAns = 99999;
+	string sex[8];
+	cin >> n;
+	for(int i = 0; i < n; i++) {
+		cin >> sex[i];
+//		change(sex[i]);
+	}
+	for(int i = 0; i < n; i++) {
+		string s1 = change(sex[i]);
+		for(int j = i+1; j < n; j++) {
+			cnt = 0;
+			string s2 = change(sex[j]);
+		//	cout << s1 << " " << s2 << endl;
+			int x = s1.length()-s2.length();
+			if(x < 0){
+				x*=-1;
+				for(int i = 0; i < x; i++){
+					s1 += '0';
+				}
+			}else{
+				for(int i = 0; i < x; i++){
+					s2 += '0';
+				}
+			}
+			for(int k = 0; k < s1.length(); k++){
+				if(s1[k] != s2[k]){
+					a[cnt++] = k+1;
+				}
+			} 
+			cout << sex[i] << " " << sex[j] << " ";
+			printf("CD:%d",cnt);
+			minAns = min(cnt,minAns);
+			if(cnt != 0){
+				printf(",bit:");
+				for(int k = 0; k < cnt;k++){
+					printf("%d|",a[k]);
+				}
+			}
+			printf("\n");
+//			cout << sex[i] << " " << sex[j] << endl;
+//			cout << s1 << endl;
+//			cout <<s2 << endl;
+		}
+		
+	}
+	printf("The MinCD is %d",minAns);
+//	map<char,int>::iterator it;
+//	for(it = mp.begin();it!=mp.end();++it){
+//		cout << it->first << " " << it->second << endl;
+//	}
+	return 0;
+}
+
+
+
+//铺砖问题
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    long long n,s1=1,s2=1;
+    cin>>n;
+    while(n--)
+    {
+        s1=1;s2=1;
+        long long m;
+        cin>>m;
+        if(m<=2)
+            cout<<1<<endl;
+      
+    if(m>2)
+    {
+        m=m-2;
+        while(m--)
+        {
+            int t=s2;
+            s2=s1+s2;
+            s1=t;
+            s1=s1%1000000007;
+            s2=s2%1000000007;
+        }
+        s2=s2%1000000007;
+        cout<<s2<<endl;
+    }
+    }
+}
+
+
+
+//动物
+
+
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+	string a[3];
+	for (int i = 0; i < 3; i ++)
+	{
+		cin >> a[i];
+	}
+	
+	if (a[0] == "vertebrado")
+	{
+		if (a[1] == "ave")
+		{
+			if (a[2] == "carnivoro") cout << "aguia";	
+			else cout << "pomba";		
+		}
+		else
+		{
+			if (a[2] == "onivoro") cout << "homem";	
+			else cout << "vaca";
+		}
+	}
+	else
+	{
+		if (a[1] == "inseto")
+		{
+			if (a[2] == "hematofago") cout << "pulga";	
+			else cout << "lagarta";		
+		}
+		else
+		{
+			if (a[2] == "hematofago") cout << "sanguessuga";	
+			else cout << "minhoca";
+		}
+	}
+
+	
+	
+	
+	return 0;
+}
+
+
+
+//回文素数
+
+
+#include<bits/stdc++.h>
+#include<string>
+#include<vector>
+#include<stack>
+#include<set>
+#include<queue>
+#define ll long long
+#define QAQ 100005
+using namespace std;
+const int mod = 1000000007;
+bool isPrime(int num){
+	if(num < 2){
+		return false;
+	}
+	for(int i = 2; i <= sqrt(num); i++){
+		if(num % i == 0){
+			return false;
+		}
+	}
+	return true;
+}
+bool check(int num){
+	string str = to_string(num);
+	for(int i = 0,j = str.length()-1; i<=j; i++,j--){
+		if(str[i]!=str[j]){
+			return false;
+		}
+	}
+	return true;
+}
+int main() {
+	int n,flag = 0; 
+	cin >> n;
+	for(int i = 2; i < n;i++){
+		if(isPrime(i)&&check(i)){
+			printf("%d,",i);
+		}
+	}
+	return 0;
+}
+
+
+
+
+//加勒比海盗船----最佳装载问题
+
+
+#include<bits/stdc++.h>
+#include<string>
+#include<vector>
+#include<stack>
+#include<set>
+#include<queue>
+#define ll long long
+#define QAQ 100005
+using namespace std;
+const int mod = 1000000007;
+int a[QAQ]; 
+int main() {
+	int T,c,n,cnt;
+	cin >> T;
+	while(T--){
+		cin >> c >> n;
+		for(int i = 0; i < n; i++){
+			cin >> a[i];
+		}
+		sort(a,a+n);
+		cnt = 0;
+		for(int i = 0; i < n; i++){
+			if(a[i]<=c){
+				c-=a[i];
+				cnt++;
+			}
+		}
+		cout << cnt << endl;
+	}
+	return 0;
+}
+
+
+
+//迷宫
+
+
+#include<iostream>
+#include<cstring>
+using namespace std;
+char a[105][105];
+int n,book[105][105],flag=0;
+int nex[4][2]={0,1,1,0,0,-1,-1,0};
+int ha,la,hb,lb;
+void dfs(int x,int y)
+{
+	if(flag==1)
+		return ;
+	if(x==hb&&y==lb)
+	{
+		flag=1;
+		return ;
+	}
+	for(int i=0;i<4;i++)
+	{
+		int tx=x+nex[i][0];
+		int ty=y+nex[i][1];
+		if(tx<0||tx>=n||ty<0||ty>=n)
+			continue;
+		if(book[tx][ty]==1||a[tx][ty]=='#')
+			continue;
+		book[tx][ty]=1;
+		dfs(tx,ty);
+		 
+	}
+}
+int main()
+{
+	int k;
+	cin>>k;
+	while(k--)
+	{
+		flag=0;
+		memset(book,0,sizeof(book));
+		cin>>n;
+		for(int i=0;i<n;i++)
+			for(int j=0;j<n;j++)
+				cin>>a[i][j];
+		cin>>ha>>la>>hb>>lb;
+		if(a[ha][la]=='#'||a[ha][la]=='#')
+		{
+			cout<<"NO"<<endl;
+			continue;
+		}
+		book[ha][la]=1;
+		dfs(ha,la);
+		if(flag==1)
+			cout<<"YES"<<endl;
+		else
+			cout<<"NO"<<endl;
+	}
+	return 0;
+}
+
+
+
+
+
+
+
